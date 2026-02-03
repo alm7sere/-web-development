@@ -1,0 +1,136 @@
+/* المتغيرات */
+:root {
+  --primary-color: #3498db;
+  --primary-hover: #2980b9;
+  --secondary-color: #2ecc71;
+  --secondary-hover: #27ae60;
+  --dark-color: #2c3e50;
+  --background-start: #2c3e50;
+  --background-end: #34495e;
+  --border-radius: 16px;
+  --transition: all 0.3s ease;
+}
+
+/* خلفية متدرجة */
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: linear-gradient(135deg, var(--background-start), #1a252f, var(--background-end));
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+  position: relative;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* زر العودة */
+.back-to-home {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+  z-index: 1000;
+}
+
+.back-to-home:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Container */
+.auth-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.auth-form-side {
+  padding: 3rem;
+}
+
+/* Logo */
+.logo {
+  font-weight: 800;
+  color: var(--primary-color);
+  font-size: 2.5rem;
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background: #f8f9fa;
+  padding: 0.25rem;
+  border-radius: 12px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.auth-tab.active {
+  background: white;
+  color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Info Side */
+.auth-info-side {
+  background: linear-gradient(135deg, var(--primary-color), #5dade2);
+  padding: 3rem;
+  color: white;
+}
+
+.info-icon {
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 3rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  padding: 0.75rem 0;
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .auth-container {
+    grid-template-columns: 1fr;
+  }
+  .auth-info-side {
+    display: none;
+  }
+}
