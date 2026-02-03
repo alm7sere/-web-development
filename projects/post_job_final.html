@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJEER - نشر وظيفة جديدة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="CSS/post_job.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-briefcase-fill text-primary me-2 fs-4"></i>
+                <span class="logo">AJEER</span>
+            </a>
+            <div class="ms-auto">
+                <a href="dash_b.html" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-right me-2"></i>
+                    العودة للوحة التحكم
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <div class="header-icon mx-auto mb-3">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <h2 class="fw-bold">نشر وظيفة جديدة</h2>
+                    <p class="text-muted">أضف تفاصيل الوظيفة وسنساعدك في إيجاد المرشح المناسب</p>
+                </div>
+
+                <!-- Progress Steps -->
+                <div class="steps-container mb-5">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">المعلومات الأساسية</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">المتطلبات</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">تأكيد ونشر</div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="card form-card">
+                    <div class="card-body p-4">
+                        <form id="jobForm">
+                            <!-- Step 1: Basic Info -->
+                            <div class="form-step active" id="step1">
+                                <h5 class="mb-4">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    المعلومات الأساسية
+                                </h5>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">
+                                        عنوان الوظيفة <span class="text-danger">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="jobTitle" 
+                                        placeholder="مثال: موظف مبيعات، كاشير، نادل، عامل توصيل"
+                                        required
+                                    >
+                                    <small class="text-muted">اكتب عنواناً واضحاً يصف الوظيفة</small>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            نوع الوظيفة <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="jobType" required>
+                                            <option value="">اختر النوع</option>
+                                            <option value="دوام جزئي">دوام جزئي</option>
+                                            <option value="بالساعة">بالساعة</option>
+                                            <option value="مؤقت">مؤقت</option>
+                                            <option value="موسمي">موسمي</option>
+                                            <option value="عن بعد">عن بعد</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            الفئة <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="jobCategory" required>
+                                            <option value="">اختر الفئة</option>
+                                            <option value="مطاعم ومقاهي">مطاعم ومقاهي</option>
+                                            <option value="تجزئة ومبيعات">تجزئة ومبيعات</option>
+                                            <option value="خدمات">خدمات</option>
+                                            <option value="توصيل">توصيل</option>
+                                            <option value="تصنيع">تصنيع</option>
+                                            <option value="تقنية">تقنية</option>
+                                            <option value="أخرى">أخرى</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">
+                                        وصف الوظيفة <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="jobDescription" 
+                                        rows="5"
+                                        placeholder="اكتب وصفاً تفصيلياً عن الوظيفة، المهام المطلوبة، وبيئة العمل..."
+                                        required
+                                    ></textarea>
+                                    <div class="d-flex justify-content-between mt-1">
+                                        <small class="text-muted">وصف واضح يساعد في جذب المرشحين المناسبين</small>
+                                        <small class="text-muted"><span id="charCount">0</span>/500</small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            الموقع <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                id="jobLocation" 
+                                                placeholder="عمان، شارع المدينة المنورة"
+                                                required
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">
+                                            عدد الموظفين المطلوبين <span class="text-danger">*</span>
+                                        </label>
+                                        <input 
+                                            type="number" 
+                                            class="form-control" 
+                                            id="jobPositions" 
+                                            min="1" 
+                                            max="50"
+                                            value="1"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                                        التالي
+                                        <i class="bi bi-arrow-left ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Requirements -->
+                            <div class="form-step" id="step2">
+                                <h5 class="mb-4">
+                                    <i class="bi bi-list-check me-2"></i>
+                                    المتطلبات والتفاصيل
+                                </h5>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">
+                                        المهارات المطلوبة <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="skills-grid" id="skillsGrid">
+                                        <button type="button" class="skill-btn" data-skill="خدمة عملاء">
+                                            <i class="bi bi-person-hearts"></i>
+                                            خدمة عملاء
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="مبيعات">
+                                            <i class="bi bi-cart"></i>
+                                            مبيعات
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="محاسبة">
+                                            <i class="bi bi-calculator"></i>
+                                            محاسبة
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="طبخ">
+                                            <i class="bi bi-egg-fried"></i>
+                                            طبخ
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="تنظيف">
+                                            <i class="bi bi-bucket"></i>
+                                            تنظيف
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="تسويق">
+                                            <i class="bi bi-megaphone"></i>
+                                            تسويق
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="برمجة">
+                                            <i class="bi bi-code-slash"></i>
+                                            برمجة
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="تصميم">
+                                            <i class="bi bi-palette"></i>
+                                            تصميم
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="كتابة محتوى">
+                                            <i class="bi bi-pencil"></i>
+                                            كتابة محتوى
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="ترجمة">
+                                            <i class="bi bi-translate"></i>
+                                            ترجمة
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="قيادة">
+                                            <i class="bi bi-car-front"></i>
+                                            قيادة
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="توصيل">
+                                            <i class="bi bi-box-seam"></i>
+                                            توصيل
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="Excel">
+                                            <i class="bi bi-file-earmark-excel"></i>
+                                            Excel
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="إدارة مواقع التواصل">
+                                            <i class="bi bi-share"></i>
+                                            إدارة مواقع التواصل
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="تصوير">
+                                            <i class="bi bi-camera"></i>
+                                            تصوير
+                                        </button>
+                                        <button type="button" class="skill-btn" data-skill="مونتاج">
+                                            <i class="bi bi-film"></i>
+                                            مونتاج
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="selectedSkills">
+                                    <small class="text-muted">اختر مهارة واحدة على الأقل</small>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">الأجر</label>
+                                        <div class="input-group">
+                                            <input 
+                                                type="number" 
+                                                class="form-control" 
+                                                id="jobSalary" 
+                                                min="1" 
+                                                step="0.5"
+                                                placeholder="5.00"
+                                                required
+                                            >
+                                            <span class="input-group-text">دينار</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">نوع الأجر</label>
+                                        <select class="form-select" id="salaryType">
+                                            <option value="ساعة">/ساعة</option>
+                                            <option value="يوم">/يوم</option>
+                                            <option value="شهر">/شهر</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">المدة المتوقعة</label>
+                                        <select class="form-select" id="jobDuration">
+                                            <option value="أقل من شهر">أقل من شهر</option>
+                                            <option value="1-3 أشهر">1-3 أشهر</option>
+                                            <option value="3-6 أشهر">3-6 أشهر</option>
+                                            <option value="أكثر من 6 أشهر">أكثر من 6 أشهر</option>
+                                            <option value="دائم">دائم</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">ساعات العمل من</label>
+                                        <input type="time" class="form-control" id="workTimeFrom" value="09:00">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">إلى</label>
+                                        <input type="time" class="form-control" id="workTimeTo" value="17:00">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">أيام العمل</label>
+                                    <div class="days-grid">
+                                        <label class="day-btn">
+                                            <input type="checkbox" class="day-checkbox" value="الأحد">
+                                            <span>الأحد</span>
+                                        </label>
+                                        <label class="day-btn">
+                                            <input type="checkbox" class="day-checkbox" value="الاثنين">
+                                            <span>الاثنين</span>
+                                        </label>
+                                        <label class="day-btn">
+                                            <input type="checkbox" class="day-checkbox" value="الثلاثاء">
+                                            <span>الثلاثاء</span>
+                                        </label>
+                                        <label class="day-btn">
+                                            <input type="checkbox" class="day-checkbox" value="الأربعاء">
+                                            <span>الأربعاء</span>
+                                        </label>
+                                        <label class="day-btn">
+                                            <input type="checkbox" class="day-checkbox" value="الخميس">
+                                            <span>الخميس</span>
+                                        </label>
+                                        <label class="day-btn">
+                                            <input type="checkbox" class="day-checkbox" value="الجمعة">
+                                            <span>الجمعة</span>
+                                        </label>
+                                        <label class="day-btn">
+                                            <input type="checkbox" class="day-checkbox" value="السبت">
+                                            <span>السبت</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">متطلبات إضافية (اختياري)</label>
+                                    <textarea 
+                                        class="form-control" 
+                                        id="additionalRequirements" 
+                                        rows="3"
+                                        placeholder="مثال: خبرة سابقة في المجال، شهادة معينة، إلخ..."
+                                    ></textarea>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="prevStep(1)">
+                                        <i class="bi bi-arrow-right me-2"></i>
+                                        السابق
+                                    </button>
+                                    <button type="button" class="btn btn-primary flex-fill" onclick="nextStep(3)">
+                                        التالي
+                                        <i class="bi bi-arrow-left ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Review and Submit -->
+                            <div class="form-step" id="step3">
+                                <h5 class="mb-4">
+                                    <i class="bi bi-check-circle me-2"></i>
+                                    مراجعة وتأكيد
+                                </h5>
+
+                                <div class="review-card mb-4">
+                                    <h6 class="fw-bold mb-3">ملخص الوظيفة</h6>
+                                    <div id="jobReview"></div>
+                                </div>
+
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    <strong>ملاحظة:</strong> بعد النشر، سيتمكن الباحثون عن عمل من رؤية هذه الوظيفة والتقدم لها.
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="prevStep(2)">
+                                        <i class="bi bi-arrow-right me-2"></i>
+                                        السابق
+                                    </button>
+                                    <button type="submit" class="btn btn-success flex-fill" id="submitBtn">
+                                        <i class="bi bi-check-lg me-2"></i>
+                                        نشر الوظيفة
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+// Global variables
+let selectedSkills = [];
+let currentStep = 1;
+let editingJobId = null;
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Post job page loaded');
+    
+    // Check if editing
+    const urlParams = new URLSearchParams(window.location.search);
+    editingJobId = urlParams.get('edit');
+    
+    if (editingJobId) {
+        loadJobForEdit(editingJobId);
+    }
+    
+    // Character counter
+    const descriptionField = document.getElementById('jobDescription');
+    if (descriptionField) {
+        descriptionField.addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('charCount').textContent = count;
+            
+            if (count > 500) {
+                this.value = this.value.substring(0, 500);
+                document.getElementById('charCount').textContent = 500;
+            }
+        });
+    }
+    
+    // Skills selection
+    const skillButtons = document.querySelectorAll('.skill-btn');
+    skillButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const skill = this.dataset.skill;
+            
+            if (this.classList.contains('selected')) {
+                this.classList.remove('selected');
+                selectedSkills = selectedSkills.filter(s => s !== skill);
+            } else {
+                this.classList.add('selected');
+                selectedSkills.push(skill);
+            }
+            
+            console.log('Selected skills:', selectedSkills);
+        });
+    });
+    
+    // Auto-fill location from business profile
+    const profile = JSON.parse(localStorage.getItem('ajeer_business_profile') || '{}');
+    if (profile.location && !editingJobId) {
+        document.getElementById('jobLocation').value = profile.location;
+    }
+});
+
+// Load job for editing
+function loadJobForEdit(jobId) {
+    const jobs = JSON.parse(localStorage.getItem('ajeer_jobs') || '[]');
+    const job = jobs.find(j => j.id == jobId);
+    
+    if (!job) {
+        alert('لم يتم العثور على الوظيفة');
+        window.location.href = 'dash_b.html';
+        return;
+    }
+    
+    // Fill form fields
+    document.getElementById('jobTitle').value = job.title || '';
+    document.getElementById('jobType').value = job.type || '';
+    document.getElementById('jobCategory').value = job.category || '';
+    document.getElementById('jobDescription').value = job.description || '';
+    document.getElementById('jobLocation').value = job.location || '';
+    document.getElementById('jobPositions').value = job.positions || 1;
+    document.getElementById('jobSalary').value = job.salary || '';
+    document.getElementById('salaryType').value = job.salaryType || 'ساعة';
+    document.getElementById('jobDuration').value = job.duration || '';
+    document.getElementById('workTimeFrom').value = job.workTimeFrom || '09:00';
+    document.getElementById('workTimeTo').value = job.workTimeTo || '17:00';
+    document.getElementById('additionalRequirements').value = job.additionalRequirements || '';
+    
+    // Select skills
+    if (job.skills && job.skills.length > 0) {
+        selectedSkills = job.skills;
+        job.skills.forEach(skill => {
+            const btn = document.querySelector(`[data-skill="${skill}"]`);
+            if (btn) btn.classList.add('selected');
+        });
+    }
+    
+    // Select days
+    if (job.workDays && job.workDays.length > 0) {
+        job.workDays.forEach(day => {
+            const checkbox = document.querySelector(`.day-checkbox[value="${day}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+    }
+    
+    // Update character count
+    document.getElementById('charCount').textContent = job.description?.length || 0;
+}
+
+// Navigation
+function nextStep(step) {
+    console.log('Next step called:', step);
+    
+    // Validate current step
+    if (!validateStep(currentStep)) {
+        return;
+    }
+    
+    // Update steps
+    document.querySelector(`#step${currentStep}`).classList.remove('active');
+    document.querySelector(`[data-step="${currentStep}"]`).classList.add('completed');
+    document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
+    
+    currentStep = step;
+    
+    document.querySelector(`#step${step}`).classList.add('active');
+    document.querySelector(`[data-step="${step}"]`).classList.add('active');
+    
+    // If step 3, show review
+    if (step === 3) {
+        showReview();
+    }
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevStep(step) {
+    console.log('Previous step called:', step);
+    
+    // Update steps
+    document.querySelector(`#step${currentStep}`).classList.remove('active');
+    document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
+    
+    currentStep = step;
+    
+    document.querySelector(`#step${step}`).classList.add('active');
+    document.querySelector(`[data-step="${step}"]`).classList.add('active');
+    document.querySelector(`[data-step="${step}"]`).classList.remove('completed');
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Validation
+function validateStep(step) {
+    console.log('Validating step:', step);
+    
+    if (step === 1) {
+        const title = document.getElementById('jobTitle').value.trim();
+        const type = document.getElementById('jobType').value;
+        const category = document.getElementById('jobCategory').value;
+        const description = document.getElementById('jobDescription').value.trim();
+        const location = document.getElementById('jobLocation').value.trim();
+        
+        console.log('Step 1 data:', {title, type, category, description, location});
+        
+        if (!title) {
+            alert('الرجاء إدخال عنوان الوظيفة');
+            return false;
+        }
+        if (!type) {
+            alert('الرجاء اختيار نوع الوظيفة');
+            return false;
+        }
+        if (!category) {
+            alert('الرجاء اختيار فئة الوظيفة');
+            return false;
+        }
+        if (!description) {
+            alert('الرجاء إدخال وصف الوظيفة');
+            return false;
+        }
+        if (!location) {
+            alert('الرجاء إدخال موقع الوظيفة');
+            return false;
+        }
+    }
+    
+    if (step === 2) {
+        console.log('Step 2 validation - selectedSkills:', selectedSkills);
+        
+        if (selectedSkills.length === 0) {
+            alert('الرجاء اختيار مهارة واحدة على الأقل');
+            return false;
+        }
+        
+        const salary = document.getElementById('jobSalary').value;
+        if (!salary || salary <= 0) {
+            alert('الرجاء إدخال الأجر');
+            return false;
+        }
+        
+        const selectedDays = document.querySelectorAll('.day-checkbox:checked');
+        if (selectedDays.length === 0) {
+            alert('الرجاء اختيار يوم عمل واحد على الأقل');
+            return false;
+        }
+    }
+    
+    console.log('Validation passed for step:', step);
+    return true;
+}
+
+// Show review
+function showReview() {
+    const reviewDiv = document.getElementById('jobReview');
+    
+    const title = document.getElementById('jobTitle').value;
+    const type = document.getElementById('jobType').value;
+    const category = document.getElementById('jobCategory').value;
+    const description = document.getElementById('jobDescription').value;
+    const location = document.getElementById('jobLocation').value;
+    const positions = document.getElementById('jobPositions').value;
+    const salary = document.getElementById('jobSalary').value;
+    const salaryType = document.getElementById('salaryType').value;
+    const duration = document.getElementById('jobDuration').value;
+    const timeFrom = document.getElementById('workTimeFrom').value;
+    const timeTo = document.getElementById('workTimeTo').value;
+    const additional = document.getElementById('additionalRequirements').value;
+    
+    const selectedDays = Array.from(document.querySelectorAll('.day-checkbox:checked')).map(cb => cb.value);
+    
+    reviewDiv.innerHTML = `
+        <div class="review-item">
+            <div class="review-label">عنوان الوظيفة</div>
+            <div class="review-value">${title}</div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">النوع والفئة</div>
+            <div class="review-value">${type} - ${category}</div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">الوصف</div>
+            <div class="review-value text-muted">${description.substring(0, 150)}${description.length > 150 ? '...' : ''}</div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">الموقع</div>
+            <div class="review-value"><i class="bi bi-geo-alt me-2"></i>${location}</div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">عدد الوظائف</div>
+            <div class="review-value">${positions} ${positions == 1 ? 'وظيفة' : 'وظائف'}</div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">المهارات المطلوبة</div>
+            <div class="review-skills">
+                ${selectedSkills.map(skill => `<span class="review-skill-tag">${skill}</span>`).join('')}
+            </div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">الأجر</div>
+            <div class="review-value">${salary} دينار/${salaryType}</div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">المدة المتوقعة</div>
+            <div class="review-value">${duration}</div>
+        </div>
+        <div class="review-item">
+            <div class="review-label">ساعات وأيام العمل</div>
+            <div class="review-value">
+                من ${timeFrom} إلى ${timeTo}<br>
+                ${selectedDays.join(', ')}
+            </div>
+        </div>
+        ${additional ? `
+        <div class="review-item">
+            <div class="review-label">متطلبات إضافية</div>
+            <div class="review-value text-muted">${additional}</div>
+        </div>
+        ` : ''}
+    `;
+}
+
+// Form submission
+document.getElementById('jobForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.innerHTML;
+    
+    // Disable button and show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>جاري النشر...';
+    
+    // Collect data
+    const selectedDays = Array.from(document.querySelectorAll('.day-checkbox:checked')).map(cb => cb.value);
+    
+    const jobData = {
+        id: editingJobId || Date.now(),
+        title: document.getElementById('jobTitle').value.trim(),
+        type: document.getElementById('jobType').value,
+        category: document.getElementById('jobCategory').value,
+        description: document.getElementById('jobDescription').value.trim(),
+        location: document.getElementById('jobLocation').value.trim(),
+        positions: parseInt(document.getElementById('jobPositions').value),
+        skills: selectedSkills,
+        salary: parseFloat(document.getElementById('jobSalary').value),
+        salaryType: document.getElementById('salaryType').value,
+        duration: document.getElementById('jobDuration').value,
+        workTimeFrom: document.getElementById('workTimeFrom').value,
+        workTimeTo: document.getElementById('workTimeTo').value,
+        workDays: selectedDays,
+        additionalRequirements: document.getElementById('additionalRequirements').value.trim(),
+        status: 'active',
+        postedAt: editingJobId ? undefined : new Date().toLocaleDateString('ar'),
+        updatedAt: editingJobId ? new Date().toLocaleDateString('ar') : undefined
+    };
+    
+    // Save to localStorage
+    let jobs = JSON.parse(localStorage.getItem('ajeer_jobs') || '[]');
+    
+    if (editingJobId) {
+        // Update existing job
+        const index = jobs.findIndex(j => j.id == editingJobId);
+        if (index !== -1) {
+            jobs[index] = { ...jobs[index], ...jobData };
+        }
+    } else {
+        // Add new job
+        jobs.push(jobData);
+    }
+    
+    localStorage.setItem('ajeer_jobs', JSON.stringify(jobs));
+    
+    // Add notification
+    const notifications = JSON.parse(localStorage.getItem('ajeer_notifications') || '[]');
+    notifications.unshift({
+        id: Date.now(),
+        title: editingJobId ? 'تم تحديث الوظيفة' : 'تم نشر وظيفة جديدة',
+        message: `وظيفة "${jobData.title}" ${editingJobId ? 'تم تحديثها' : 'تم نشرها'} بنجاح`,
+        icon: 'bi-check-circle',
+        time: 'الآن',
+        read: false
+    });
+    localStorage.setItem('ajeer_notifications', JSON.stringify(notifications));
+    
+    // Simulate API call delay
+    setTimeout(() => {
+        submitBtn.innerHTML = '<i class="bi bi-check-lg me-2"></i>تم بنجاح!';
+        
+        setTimeout(() => {
+            window.location.href = 'dash_b.html';
+        }, 1000);
+    }, 1500);
+});
+    </script>
+</body>
+</html>

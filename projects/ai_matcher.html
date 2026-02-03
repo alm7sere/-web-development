@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJEER - الذكاء الاصطناعي للمطابقة</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .ai-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+        }
+        
+        .ai-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .ai-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .ai-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .match-score {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .progress {
+            height: 30px;
+            border-radius: 15px;
+        }
+        
+        .match-excellent { background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%); }
+        .match-good { background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%); }
+        .match-fair { background: linear-gradient(90deg, #f2994a 0%, #f2c94c 100%); }
+        .match-low { background: linear-gradient(90deg, #bdc3c7 0%, #95a5a6 100%); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ai-card">
+            <div class="ai-header">
+                <div class="ai-icon">
+                    <i class="bi bi-cpu"></i>
+                </div>
+                <h2 class="fw-bold">نظام المطابقة الذكي</h2>
+                <p class="text-muted">تحليل تلقائي بالذكاء الاصطناعي</p>
+            </div>
+            
+            <div id="analysisResult"></div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg" onclick="runAIAnalysis()">
+                    <i class="bi bi-play-circle me-2"></i>
+                    تشغيل التحليل الذكي
+                </button>
+                <a href="browse_jobs.html" class="btn btn-outline-secondary btn-lg ms-2">
+                    <i class="bi bi-arrow-right me-2"></i>
+                    عودة
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateAIMatch(seekerSkills, jobSkills) {
+            if (!jobSkills || jobSkills.length === 0) return 50;
+            if (!seekerSkills || seekerSkills.length === 0) return 20;
+            
+            // حساب التطابق المباشر
+            let matchCount = 0;
+            jobSkills.forEach(jobSkill => {
+                if (seekerSkills.includes(jobSkill)) {
+                    matchCount++;
+                }
+            });
+            
+            // حساب النسبة المئوية
+            const directMatch = (matchCount / jobSkills.length) * 100;
+            
+            // إضافة نقاط إضافية للمهارات الإضافية
+            const extraSkills = seekerSkills.length - matchCount;
+            const bonusPoints = Math.min(extraSkills * 5, 20);
+            
+            return Math.min(Math.round(directMatch + bonusPoints), 100);
+        }
+        
+        function runAIAnalysis() {
+            const seekerProfile = JSON.parse(localStorage.getItem('ajeer_seeker_profile') || '{}');
+            const jobs = JSON.parse(localStorage.getItem('ajeer_jobs') || '[]');
+            const activeJobs = jobs.filter(j => j.status === 'active');
+            
+            if (!seekerProfile.skills || seekerProfile.skills.length === 0) {
+                document.getElementById('analysisResult').innerHTML = `
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        الرجاء إكمال ملفك الشخصي أولاً!
+                    </div>
+                `;
+                return;
+            }
+            
+            if (activeJobs.length === 0) {
+                document.getElementById('analysisResult').innerHTML = `
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>
+                        لا توجد وظائف متاحة حالياً للتحليل
+                    </div>
+                `;
+                return;
+            }
+            
+            // تحليل كل وظيفة
+            const analyzed = activeJobs.map(job => {
+                const score = calculateAIMatch(seekerProfile.skills, job.skills || []);
+                return { job, score };
+            }).sort((a, b) => b.score - a.score);
+            
+            // أفضل 5 وظائف
+            const topJobs = analyzed.slice(0, 5);
+            
+            let html = `
+                <h4 class="mb-4 text-center">
+                    <i class="bi bi-graph-up-arrow me-2"></i>
+                    نتائج التحليل الذكي
+                </h4>
+                <div class="alert alert-success">
+                    <i class="bi bi-check-circle me-2"></i>
+                    تم تحليل ${activeJobs.length} وظيفة باستخدام الذكاء الاصطناعي
+                </div>
+                <h5 class="mt-4 mb-3">أفضل الوظائف المطابقة لملفك:</h5>
+            `;
+            
+            topJobs.forEach((item, index) => {
+                const { job, score } = item;
+                let matchClass, matchText, matchIcon;
+                
+                if (score >= 80) {
+                    matchClass = 'match-excellent';
+                    matchText = 'ممتاز';
+                    matchIcon = 'bi-star-fill';
+                } else if (score >= 60) {
+                    matchClass = 'match-good';
+                    matchText = 'جيد';
+                    matchIcon = 'bi-hand-thumbs-up-fill';
+                } else if (score >= 40) {
+                    matchClass = 'match-fair';
+                    matchText = 'متوسط';
+                    matchIcon = 'bi-dash-circle-fill';
+                } else {
+                    matchClass = 'match-low';
+                    matchText = 'منخفض';
+                    matchIcon = 'bi-info-circle-fill';
+                }
+                
+                html += `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h6 class="mb-1">${index + 1}. ${job.title}</h6>
+                                    <small class="text-muted">
+                                        <i class="bi bi-geo-alt me-1"></i>${job.location || 'عمان'}
+                                        <i class="bi bi-cash me-1 ms-3"></i>${job.salary} دينار
+                                    </small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="match-score" style="font-size: 2rem;">${score}%</div>
+                                    <small class="text-muted">نسبة التطابق</small>
+                                </div>
+                            </div>
+                            <div class="progress mb-2">
+                                <div class="progress-bar ${matchClass}" role="progressbar" 
+                                     style="width: ${score}%" aria-valuenow="${score}" 
+                                     aria-valuemin="0" aria-valuemax="100">
+                                    <i class="bi ${matchIcon} me-2"></i>${matchText}
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap mt-2">
+                                ${(job.skills || []).slice(0, 4).map(skill => {
+                                    const matched = seekerProfile.skills.includes(skill);
+                                    return `<span class="badge ${matched ? 'bg-success' : 'bg-secondary'}">${skill}</span>`;
+                                }).join('')}
+                            </div>
+                            <div class="mt-3">
+                                <a href="browse_jobs.html" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-eye me-1"></i>عرض التفاصيل
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // إحصائيات
+            const avgScore = Math.round(topJobs.reduce((sum, item) => sum + item.score, 0) / topJobs.length);
+            html += `
+                <div class="alert alert-info mt-4">
+                    <h6><i class="bi bi-lightbulb me-2"></i>توصيات الذكاء الاصطناعي:</h6>
+                    <ul class="mb-0">
+                        <li>متوسط نسبة التطابق: <strong>${avgScore}%</strong></li>
+                        <li>عدد المهارات المطلوبة: <strong>${seekerProfile.skills.length}</strong></li>
+                        <li>الوظائف المناسبة جداً: <strong>${topJobs.filter(j => j.score >= 80).length}</strong></li>
+                    </ul>
+                </div>
+            `;
+            
+            document.getElementById('analysisResult').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

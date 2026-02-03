@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJEER - طلباتي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f8f9fa;
+        }
+        .logo {
+            font-weight: 800;
+            color: #3498db;
+            font-size: 1.5rem;
+        }
+        .application-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1rem;
+        }
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .status-new {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-accepted {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-briefcase-fill text-primary me-2 fs-4"></i>
+                <span class="logo">AJEER</span>
+            </a>
+            <div class="navbar-nav me-auto">
+                <a class="nav-link" href="browse_jobs.html">تصفح الوظائف</a>
+                <a class="nav-link active" href="my_applications.html">طلباتي</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="mb-4">طلباتي (<span id="totalApps">0</span>)</h2>
+        <div id="applicationsContainer">
+            <div class="text-center py-5">
+                <i class="bi bi-inbox display-1 text-muted"></i>
+                <h5 class="mt-3">لا توجد طلبات بعد</h5>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadApplications();
+        });
+
+        function loadApplications() {
+            const seekerProfile = JSON.parse(localStorage.getItem('ajeer_seeker_profile') || '{}');
+            const applications = JSON.parse(localStorage.getItem('ajeer_applicants') || '[]');
+            const myApps = applications.filter(app => app.seekerId == (seekerProfile.id || 'current'));
+            
+            document.getElementById('totalApps').textContent = myApps.length;
+            
+            if (myApps.length === 0) return;
+            
+            const jobs = JSON.parse(localStorage.getItem('ajeer_jobs') || '[]');
+            const container = document.getElementById('applicationsContainer');
+            
+            container.innerHTML = myApps.map(app => {
+                const job = jobs.find(j => j.id == app.jobId);
+                if (!job) return '';
+                
+                return `
+                    <div class="application-card">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="mb-1">${job.title}</h5>
+                                <p class="text-muted mb-0">تقدمت في: ${app.appliedAt}</p>
+                            </div>
+                            <span class="status-badge status-${app.status}">
+                                ${app.status === 'new' ? 'قيد المراجعة' : app.status === 'accepted' ? 'مقبول' : 'مرفوض'}
+                            </span>
+                        </div>
+                        <p class="text-muted mb-2">${job.description?.substring(0, 100)}...</p>
+                        <div class="d-flex gap-3 text-muted small">
+                            <span><i class="bi bi-geo-alt me-1"></i>${job.location}</span>
+                            <span><i class="bi bi-cash me-1"></i>${job.salary} دينار</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AJEER - تسجيل الدخول</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="CSS/S22.css">
+</head> 
+<body class="d-flex align-items-center py-5">
+  <a href="index.html" class="back-to-home">
+    <i class="bi bi-arrow-right me-2"></i>
+    العودة للرئيسية
+  </a>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-9">
+        <div class="auth-container">
+          <div class="auth-form-side">
+            <div class="text-center mb-4">
+              <div class="logo-container">
+                <i class="bi bi-briefcase-fill"></i>
+                <h2 class="logo">AJEER</h2>
+              </div>
+              <p class="text-muted subtitle">منصة الوظائف المرنة في الأردن</p>
+            </div>
+
+            <div id="alertError" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              <span id="errorMessage">خطأ في البريد الإلكتروني أو كلمة المرور.</span>
+              <button type="button" class="btn-close" onclick="hideAlerts()"></button>
+            </div>
+
+            <div id="alertSuccess" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+              <i class="bi bi-check-circle-fill me-2"></i>
+              <span id="successMessage">تم التسجيل بنجاح! جاري التحويل...</span>
+            </div>
+
+            <div class="auth-tabs">
+              <button class="auth-tab active" id="loginTab" onclick="showLogin()">
+                <i class="bi bi-box-arrow-in-left me-2"></i>
+                تسجيل الدخول
+              </button>
+              <button class="auth-tab" id="registerTab" onclick="showRegister()">
+                <i class="bi bi-person-plus me-2"></i>
+                حساب جديد
+              </button>
+            </div>
+
+            <!-- Login Section -->
+            <div id="loginSection" class="auth-section">
+              <form id="loginForm">
+                <div class="mb-3">
+                  <label class="form-label">البريد الإلكتروني</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                    <input type="email" class="form-control" id="loginEmail" placeholder="example@email.com" required>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">كلمة المرور</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="••••••••" required minlength="6">
+                    <button class="input-group-text toggle-password" type="button" onclick="togglePassword('loginPassword', this)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">تذكرني</label>
+                  </div>
+                  <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+                </div>
+                
+                <button type="submit" id="loginBtn" class="btn btn-primary w-100 mb-3">
+                  <i class="bi bi-box-arrow-in-left me-2"></i>
+                  تسجيل الدخول
+                </button>
+
+                <div class="divider"><span>أو</span></div>
+
+                <div class="social-login">
+                  <button type="button" class="btn btn-outline-secondary w-100 mb-2">
+                    <i class="bi bi-google me-2"></i>
+                    تسجيل الدخول بواسطة Google
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-facebook me-2"></i>
+                    تسجيل الدخول بواسطة Facebook
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Register Section -->
+            <div id="registerSection" class="auth-section" style="display:none;">
+              <div class="user-type-selection mb-4">
+                <p class="text-center mb-3 fw-semibold">اختر نوع الحساب:</p>
+                <div class="row g-3">
+                  <div class="col-6">
+                    <input type="radio" class="btn-check" name="userType" id="employerType" value="employer" checked>
+                    <label class="btn btn-outline-primary w-100 user-type-btn" for="employerType">
+                      <i class="bi bi-building d-block fs-3 mb-2"></i>
+                      <span class="d-block fw-bold">صاحب عمل</span>
+                      <small class="text-muted">شركة أو متجر</small>
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <input type="radio" class="btn-check" name="userType" id="seekerType" value="seeker">
+                    <label class="btn btn-outline-success w-100 user-type-btn" for="seekerType">
+                      <i class="bi bi-person-workspace d-block fs-3 mb-2"></i>
+                      <span class="d-block fw-bold">باحث عن عمل</span>
+                      <small class="text-muted">موظف مرن</small>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <form id="registerForm">
+                <!-- Employer Fields -->
+                <div id="employerFields">
+                  <div class="mb-3">
+                    <label class="form-label">اسم الشركة / المنشأة</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-building"></i></span>
+                      <input type="text" class="form-control" id="businessName" placeholder="مثال: مطعم الشام">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Seeker Fields -->
+                <div id="seekerFields" style="display:none;">
+                  <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label">الاسم الأول</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" id="firstName" placeholder="أحمد">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">الاسم الأخير</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" id="lastName" placeholder="محمد">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">البريد الإلكتروني</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" class="form-control" id="regEmail" placeholder="example@email.com" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">رقم الهاتف</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-phone"></i></span>
+                    <input type="tel" class="form-control" id="phone" placeholder="0790000000" required>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">كلمة المرور</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" class="form-control" id="regPassword" placeholder="••••••••" required minlength="6">
+                    <button class="input-group-text toggle-password" type="button" onclick="togglePassword('regPassword', this)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                  <div class="password-strength mt-2">
+                    <div class="strength-bar">
+                      <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <small id="strengthText" class="text-muted">قوة كلمة المرور</small>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">تأكيد كلمة المرور</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    <input type="password" class="form-control" id="regConfirmPassword" placeholder="••••••••" required minlength="6">
+                    <button class="input-group-text toggle-password" type="button" onclick="togglePassword('regConfirmPassword', this)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                  <div id="passwordMatchFeedback" class="invalid-feedback" style="display:none;">
+                    <i class="bi bi-x-circle me-1"></i>كلمات المرور غير متطابقة
+                  </div>
+                  <div id="passwordMatchSuccess" class="valid-feedback" style="display:none;">
+                    <i class="bi bi-check-circle me-1"></i>كلمات المرور متطابقة
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="termsAgree" required>
+                    <label class="form-check-label small" for="termsAgree">
+                      أوافق على <a href="#" class="text-primary">الشروط والأحكام</a> و <a href="#" class="text-primary">سياسة الخصوصية</a>
+                    </label>
+                  </div>
+                </div>
+                
+                <button type="submit" class="btn btn-success w-100 mb-3">
+                  <i class="bi bi-person-plus me-2"></i>
+                  إنشاء الحساب
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Side - Info Panel -->
+          <div class="auth-info-side">
+            <div class="info-content">
+              <div class="info-icon mb-4">
+                <i class="bi bi-briefcase-fill"></i>
+              </div>
+              
+              <div id="loginInfo" class="info-text">
+                <h3 class="mb-3">مرحباً بعودتك!</h3>
+                <p class="mb-4">سجّل دخولك للوصول إلى حسابك</p>
+                <ul class="feature-list">
+                  <li><i class="bi bi-check-circle-fill"></i>إدارة حسابك</li>
+                  <li><i class="bi bi-check-circle-fill"></i>الوصول لكل الميزات</li>
+                  <li><i class="bi bi-check-circle-fill"></i>متابعة نشاطك</li>
+                </ul>
+              </div>
+
+              <div id="registerInfo" class="info-text" style="display:none;">
+                <h3 class="mb-3">انضم إلى AJEER اليوم!</h3>
+                <p class="mb-4">أنشئ حسابك وابدأ رحلتك في عالم الوظائف المرنة</p>
+                <ul class="feature-list">
+                  <li><i class="bi bi-check-circle-fill"></i>تسجيل مجاني وسريع</li>
+                  <li><i class="bi bi-check-circle-fill"></i>آلاف الفرص المتاحة</li>
+                  <li><i class="bi bi-check-circle-fill"></i>نظام مطابقة ذكي</li>
+                  <li><i class="bi bi-check-circle-fill"></i>دعم فني على مدار الساعة</li>
+                </ul>
+                <div class="stats mt-4">
+                  <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">شركة</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-number">2000+</div>
+                    <div class="stat-label">باحث</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-number">1500+</div>
+                    <div class="stat-label">وظيفة</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+// Toggle between login and register
+function showLogin() {
+  document.getElementById('loginSection').style.display = 'block';
+  document.getElementById('registerSection').style.display = 'none';
+  document.getElementById('loginTab').classList.add('active');
+  document.getElementById('registerTab').classList.remove('active');
+  document.getElementById('loginInfo').style.display = 'block';
+  document.getElementById('registerInfo').style.display = 'none';
+  hideAlerts();
+}
+
+function showRegister() {
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('registerSection').style.display = 'block';
+  document.getElementById('loginTab').classList.remove('active');
+  document.getElementById('registerTab').classList.add('active');
+  document.getElementById('loginInfo').style.display = 'none';
+  document.getElementById('registerInfo').style.display = 'block';
+  hideAlerts();
+}
+
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const icon = btn.querySelector('i');
+  
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('bi-eye');
+    icon.classList.add('bi-eye-slash');
+  } else {
+    input.type = 'password';
+    icon.classList.remove('bi-eye-slash');
+    icon.classList.add('bi-eye');
+  }
+}
+
+function hideAlerts() {
+  document.getElementById('alertError').classList.add('d-none');
+  document.getElementById('alertSuccess').classList.add('d-none');
+}
+
+function showError(message) {
+  const alert = document.getElementById('alertError');
+  document.getElementById('errorMessage').textContent = message;
+  alert.classList.remove('d-none');
+}
+
+function showSuccess(message) {
+  const alert = document.getElementById('alertSuccess');
+  document.getElementById('successMessage').textContent = message;
+  alert.classList.remove('d-none');
+}
+
+// Password strength
+document.getElementById('regPassword').addEventListener('input', function() {
+  const password = this.value;
+  const strengthFill = document.getElementById('strengthFill');
+  const strengthText = document.getElementById('strengthText');
+  
+  let strength = 0;
+  if (password.length >= 6) strength++;
+  if (password.length >= 8) strength++;
+  if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+  if (/\d/.test(password)) strength++;
+  if (/[^a-zA-Z\d]/.test(password)) strength++;
+  
+  const percentage = (strength / 5) * 100;
+  strengthFill.style.width = percentage + '%';
+  
+  if (strength <= 2) {
+    strengthFill.className = 'strength-fill weak';
+    strengthText.textContent = 'ضعيفة';
+    strengthText.className = 'text-danger';
+  } else if (strength <= 3) {
+    strengthFill.className = 'strength-fill medium';
+    strengthText.textContent = 'متوسطة';
+    strengthText.className = 'text-warning';
+  } else {
+    strengthFill.className = 'strength-fill strong';
+    strengthText.textContent = 'قوية';
+    strengthText.className = 'text-success';
+  }
+});
+
+// Password match
+function checkPasswords() {
+  const password = document.getElementById('regPassword').value;
+  const confirmPassword = document.getElementById('regConfirmPassword').value;
+  const matchFeedback = document.getElementById('passwordMatchFeedback');
+  const successFeedback = document.getElementById('passwordMatchSuccess');
+
+  if (confirmPassword.length === 0) {
+    matchFeedback.style.display = 'none';
+    successFeedback.style.display = 'none';
+    return true;
+  }
+
+  if (password !== confirmPassword) {
+    matchFeedback.style.display = 'block';
+    successFeedback.style.display = 'none';
+    return false;
+  } else {
+    matchFeedback.style.display = 'none';
+    successFeedback.style.display = 'block';
+    return true;
+  }
+}
+
+document.getElementById('regConfirmPassword').addEventListener('input', checkPasswords);
+document.getElementById('regPassword').addEventListener('input', function() {
+  if (document.getElementById('regConfirmPassword').value) {
+    checkPasswords();
+  }
+});
+
+// Toggle user type fields
+document.querySelectorAll('input[name="userType"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    if (this.value === 'employer') {
+      document.getElementById('employerFields').style.display = 'block';
+      document.getElementById('seekerFields').style.display = 'none';
+      document.getElementById('businessName').required = true;
+      document.getElementById('firstName').required = false;
+      document.getElementById('lastName').required = false;
+    } else {
+      document.getElementById('employerFields').style.display = 'none';
+      document.getElementById('seekerFields').style.display = 'block';
+      document.getElementById('businessName').required = false;
+      document.getElementById('firstName').required = true;
+      document.getElementById('lastName').required = true;
+    }
+  });
+});
+
+// Clear storage on page load (logout)
+if (localStorage.getItem('ajeer_user_logged_in') === 'true') {
+  localStorage.removeItem('ajeer_jobs');
+  localStorage.removeItem('ajeer_business_profile');
+  localStorage.removeItem('ajeer_business_type');
+  localStorage.removeItem('ajeer_business_name');
+  localStorage.removeItem('ajeer_user_logged_in');
+  localStorage.removeItem('ajeer_seeker_profile');
+  localStorage.removeItem('ajeer_applicants');
+}
+
+// Login form
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const btn = document.getElementById('loginBtn');
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  
+  const originalContent = btn.innerHTML;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>جاري تسجيل الدخول...';
+  btn.disabled = true;
+  hideAlerts();
+  
+  setTimeout(() => {
+    // Demo: always success for simplicity
+    // في الإنتاج: تتحقق من قاعدة البيانات
+    
+    localStorage.setItem('ajeer_user_logged_in', 'true');
+    localStorage.setItem('ajeer_user_email', email);
+    
+    // Check user type from stored data
+    const userType = localStorage.getItem('ajeer_user_type');
+    const hasEmployerProfile = localStorage.getItem('ajeer_business_type');
+    const hasSeekerProfile = localStorage.getItem('ajeer_seeker_profile');
+    
+    showSuccess('تم تسجيل الدخول بنجاح! جاري التحويل...');
+    
+    setTimeout(() => {
+      if (userType === 'seeker') {
+        // Seeker
+        if (hasSeekerProfile) {
+          window.location.href = 'browse_jobs.html';
+        } else {
+          window.location.href = 'seeker_profile.html';
+        }
+      } else {
+        // Employer (default)
+        if (hasEmployerProfile) {
+          window.location.href = 'dashboard_fixed.html';
+        } else {
+          window.location.href = 'business-profile.html';
+        }
+      }
+    }, 1000);
+  }, 1500);
+});
+
+// Register form
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  if (!checkPasswords()) {
+    showError('كلمات المرور غير متطابقة. يرجى التأكد من كتابتها بشكل صحيح.');
+    return;
+  }
+
+  const userType = document.querySelector('input[name="userType"]:checked').value;
+  const email = document.getElementById('regEmail').value;
+  const phone = document.getElementById('phone').value;
+  
+  let name;
+  if (userType === 'employer') {
+    name = document.getElementById('businessName').value;
+    if (!name) {
+      showError('الرجاء إدخال اسم الشركة');
+      return;
+    }
+  } else {
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    if (!firstName || !lastName) {
+      showError('الرجاء إدخال الاسم الأول والأخير');
+      return;
+    }
+    name = firstName + ' ' + lastName;
+  }
+
+  // Save user data
+  localStorage.setItem('ajeer_user_type', userType);
+  localStorage.setItem('ajeer_user_name', name);
+  localStorage.setItem('ajeer_user_email', email);
+  localStorage.setItem('ajeer_user_phone', phone);
+  localStorage.setItem('ajeer_user_logged_in', 'true');
+  
+  // Save additional data for seeker
+  if (userType === 'seeker') {
+    const userData = {
+      name: name,
+      email: email,
+      phone: phone
+    };
+    localStorage.setItem('ajeer_user_data', JSON.stringify(userData));
+  } else {
+    localStorage.setItem('ajeer_business_name', name);
+  }
+  
+  showSuccess('تم إنشاء الحساب بنجاح! جاري التحويل...');
+  
+  setTimeout(() => {
+    if (userType === 'employer') {
+      window.location.href = 'business-profile.html';
+    } else {
+      window.location.href = 'seeker_profile.html';
+    }
+  }, 1500);
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJEER - إكمال الملف الشخصي</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --success: #2ecc71;
+            --dark: #2c3e50;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #1a252f, #34495e);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, var(--success), #58d68d);
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .logo-circle {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo-circle i {
+            font-size: 3rem;
+        }
+
+        .steps-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .profile-body {
+            padding: 3rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .skill-btn {
+            padding: 0.75rem 1rem;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-btn:hover {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .skill-btn.selected {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-body {
+                padding: 2rem 1.5rem;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="logo-circle">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <h2>إكمال ملفك الشخصي</h2>
+                <p class="mb-0 opacity-75">أخبرنا عن مهاراتك وخبراتك</p>
+            </div>
+
+            <div class="steps-indicator">
+                <div class="step">
+                    <div class="step-number">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <span class="d-none d-md-inline">إنشاء الحساب</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <span class="d-none d-md-inline">معلوماتك الشخصية</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <span class="d-none d-md-inline">تصفح الوظائف</span>
+                </div>
+            </div>
+
+            <div class="profile-body">
+                <form id="seekerProfileForm">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">الاسم الأول <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="firstName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">الاسم الأخير <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">رقم الهاتف <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="phone" pattern="07[0-9]{8}" placeholder="0790000000" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">العمر <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="age" min="16" max="70" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">المدينة <span class="text-danger">*</span></label>
+                        <select class="form-select" id="city" required>
+                            <option value="">اختر المدينة</option>
+                            <option value="عمان">عمان</option>
+                            <option value="الزرقاء">الزرقاء</option>
+                            <option value="إربد">إربد</option>
+                            <option value="العقبة">العقبة</option>
+                            <option value="السلط">السلط</option>
+                            <option value="المفرق">المفرق</option>
+                            <option value="الكرك">الكرك</option>
+                            <option value="معان">معان</option>
+                            <option value="جرش">جرش</option>
+                            <option value="عجلون">عجلون</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">المهارات <span class="text-danger">*</span></label>
+                        <div class="skills-grid" id="skillsGrid">
+                            <button type="button" class="skill-btn" data-skill="خدمة عملاء">
+                                <i class="bi bi-person-hearts"></i>
+                                خدمة عملاء
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="مبيعات">
+                                <i class="bi bi-cart"></i>
+                                مبيعات
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="محاسبة">
+                                <i class="bi bi-calculator"></i>
+                                محاسبة
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="طبخ">
+                                <i class="bi bi-egg-fried"></i>
+                                طبخ
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="تنظيف">
+                                <i class="bi bi-bucket"></i>
+                                تنظيف
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="تسويق">
+                                <i class="bi bi-megaphone"></i>
+                                تسويق
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="برمجة">
+                                <i class="bi bi-code-slash"></i>
+                                برمجة
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="تصميم">
+                                <i class="bi bi-palette"></i>
+                                تصميم
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="كتابة محتوى">
+                                <i class="bi bi-pencil"></i>
+                                كتابة محتوى
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="ترجمة">
+                                <i class="bi bi-translate"></i>
+                                ترجمة
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="قيادة">
+                                <i class="bi bi-car-front"></i>
+                                قيادة
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="توصيل">
+                                <i class="bi bi-box-seam"></i>
+                                توصيل
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="Excel">
+                                <i class="bi bi-file-earmark-excel"></i>
+                                Excel
+                            </button>
+                            <button type="button" class="skill-btn" data-skill="إدارة مواقع التواصل">
+                                <i class="bi bi-share"></i>
+                                مواقع التواصل
+                            </button>
+                        </div>
+                        <small class="text-muted">اختر مهارة واحدة على الأقل</small>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">الخبرة السابقة (اختياري)</label>
+                        <textarea class="form-control" id="experience" rows="4" placeholder="اكتب عن خبراتك السابقة في العمل..."></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">المؤهل التعليمي</label>
+                        <select class="form-select" id="education">
+                            <option value="">اختر المؤهل</option>
+                            <option value="ثانوية عامة">ثانوية عامة</option>
+                            <option value="دبلوم">دبلوم</option>
+                            <option value="بكالوريوس">بكالوريوس</option>
+                            <option value="ماجستير">ماجستير</option>
+                            <option value="دكتوراه">دكتوراه</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-5">
+                        <button type="submit" class="btn btn-success flex-fill">
+                            <i class="bi bi-check-circle me-2"></i>
+                            حفظ والمتابعة
+                        </button>
+                        <a href="login.html" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-right me-2"></i>
+                            عودة
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedSkills = [];
+
+        // Skills selection
+        document.querySelectorAll('.skill-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const skill = this.dataset.skill;
+                
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    selectedSkills = selectedSkills.filter(s => s !== skill);
+                } else {
+                    this.classList.add('selected');
+                    selectedSkills.push(skill);
+                }
+            });
+        });
+
+        // Load existing data if available
+        window.onload = function() {
+            const userData = JSON.parse(localStorage.getItem('ajeer_user_data') || '{}');
+            const seekerProfile = JSON.parse(localStorage.getItem('ajeer_seeker_profile') || '{}');
+            
+            // Pre-fill from registration
+            if (userData.name) {
+                const names = userData.name.split(' ');
+                document.getElementById('firstName').value = names[0] || '';
+                document.getElementById('lastName').value = names.slice(1).join(' ') || '';
+            }
+            
+            if (userData.phone) {
+                document.getElementById('phone').value = userData.phone;
+            }
+
+            // Pre-fill from existing profile
+            if (seekerProfile.firstName) document.getElementById('firstName').value = seekerProfile.firstName;
+            if (seekerProfile.lastName) document.getElementById('lastName').value = seekerProfile.lastName;
+            if (seekerProfile.phone) document.getElementById('phone').value = seekerProfile.phone;
+            if (seekerProfile.age) document.getElementById('age').value = seekerProfile.age;
+            if (seekerProfile.city) document.getElementById('city').value = seekerProfile.city;
+            if (seekerProfile.experience) document.getElementById('experience').value = seekerProfile.experience;
+            if (seekerProfile.education) document.getElementById('education').value = seekerProfile.education;
+            
+            if (seekerProfile.skills && seekerProfile.skills.length > 0) {
+                selectedSkills = seekerProfile.skills;
+                seekerProfile.skills.forEach(skill => {
+                    const btn = document.querySelector(`[data-skill="${skill}"]`);
+                    if (btn) btn.classList.add('selected');
+                });
+            }
+        };
+
+        // Form submission
+        document.getElementById('seekerProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (selectedSkills.length === 0) {
+                alert('الرجاء اختيار مهارة واحدة على الأقل');
+                return;
+            }
+
+            const profileData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                age: parseInt(document.getElementById('age').value),
+                city: document.getElementById('city').value,
+                skills: selectedSkills,
+                experience: document.getElementById('experience').value.trim(),
+                education: document.getElementById('education').value,
+                createdAt: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            localStorage.setItem('ajeer_seeker_profile', JSON.stringify(profileData));
+            localStorage.setItem('ajeer_user_type', 'seeker');
+            
+            // Show success
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>جاري الحفظ...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>تم الحفظ!';
+                setTimeout(() => {
+                    window.location.href = 'browse_jobs.html';
+                }, 500);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
